@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>紙上的法律，山裡的現實：原民獵槍新制上路後的平行時空</title>
+<meta name="description" content="原住民自製獵槍新制專題：甲式與乙式自製獵槍的實物影像、手繪示意與法規比較。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="kicker">原住民自製獵槍新制｜互動專題（原型）</div>
+  <h1 class="visually-hidden">紙上的法律，山裡的現實：原民獵槍新制上路後的平行時空</h1>
+  <div id="title-canvas"></div>
+  <p class="hint">點一下標題可重播動畫</p>
+</header>
+<main>
 
+<div class="wrap">
+  <h2 class="section-h">甲式與乙式：兩件樣本的外觀部位</h2>
+  <p class="dek"><span class="badge">手繪示意</span>線稿依各自的實物影像描繪，只畫照片看得到的外觀。點選部位或下方按鈕查看說明；拉「分離」可把部位拆開檢視，拉「原照」可把線稿疊回照片核對位置。</p>
+
+  <div class="controls">
+    <div class="chips" role="group" aria-label="選擇部位">
+      <button class="chip" data-part="barrel" aria-pressed="false">槍管</button>
+      <button class="chip" data-part="receiver" aria-pressed="false">槍身</button>
+      <button class="chip" data-part="guard" aria-pressed="false">扳機護圈</button>
+      <button class="chip" data-part="stock" aria-pressed="false">槍托</button>
+    </div>
+    <label class="slider">分離 <input id="explode" type="range" min="0" max="100" value="0"></label>
+    <label class="slider">原照 <input id="photo" type="range" min="0" max="100" value="0"></label>
+  </div>
+
+  <div class="grid">
+    <section class="panel">
+      <h2><span class="tag tagA">甲式</span>王光祿獲贈的甲式自製獵槍</h2>
+      <div class="stage" id="stageA"></div>
+      <div class="src">影像來源：原住民族電視台〈守護狩獵文化 王光祿獲贈首支原民甲式獵槍〉新聞影片 00:09 截圖（2025年12月13日，台東海端）。左手遮住護木下半，右手遮住扳機與槍托後段，槍托尾端在畫面外。</div>
+    </section>
+    <section class="panel">
+      <h2><span class="tag tagB">乙式</span>花蓮光復的乙式自製獵槍（UB114001）</h2>
+      <div class="stage" id="stageB"></div>
+      <div class="src">影像來源：花蓮縣警察局提供，中央社〈花蓮光復獵人送驗原民自製獵槍 成全國合格首例〉（2025年12月20日）。斜角俯拍，近大遠小；槍托尾端在畫面外。</div>
+    </section>
+  </div>
+
+  <div class="info" id="info" aria-live="polite"></div>
+
+  <div class="note">
+    <p><b>分離動畫只是示意</b>：只把照片看得到的外觀部位拉開，方便辨識，不代表實際拆解方式，也不包含內部零件。比較僅限這兩件樣本。</p>
+    <p><b>法規</b>：依《原住民漁民自製獵槍魚槍許可及管理辦法》第3條，甲式使用經內政部許可購置的獵槍主要組成零件，乙式使用原住民自製的主要組成零件。內政部公告的獵槍主要組成零件為槍管、槍身、扳機、撞針、槍機、減音管。</p>
+    <p>來源：<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0080230">全國法規資料庫</a>、<a href="https://gazette.nat.gov.tw/EG_FileManager/eguploadpub/eg030110/ch02/type1/gov10/num2/Eg.htm">內政部113年6月13日公告</a>、<a href="https://news.ipcf.org.tw/190859">原視新聞</a>、<a href="https://www.cna.com.tw/news/aloc/202512200173.aspx">中央社</a>、<a href="https://news.ltn.com.tw/news/society/breakingnews/5284560">自由時報</a>。</p>
+  </div>
+</div>
+
+
+  <div class="wrap">
+    <h2 class="section-h">靜態版對照圖</h2>
+    <figure class="figure">
+      <img src="figures/hunting_rifles_type_A_B_compare.png" alt="甲式與乙式自製獵槍的實物影像與手繪外觀標註對照圖" loading="lazy">
+      <figcaption>可供刊登或社群使用的靜態版本，含影像來源與法規說明。</figcaption>
+    </figure>
+  </div>
+</main>
+<script src="js/lib/p5.min.js"></script>
+<script src="data/shapes.js"></script>
+<script src="js/title.js"></script>
+<script src="js/compare.js"></script>
+</body>
+</html>
