@@ -84,7 +84,7 @@ blockquote cite { display: block; font-style: normal; font-size: 13.5px; color: 
 .tl li.new .dot::after { background: var(--ink); }
 .tl .txt { padding-bottom: 16px; font-size: 15.5px; line-height: 1.7; }
 .tl .txt b { display: block; font-size: 16px; }
-.tl .txt small { color: var(--ink-3); font-size: 12.5px; }
+.tl .txt small { color: var(--ink-3); font-size: 12.5px; display: block; }
 
 /* 意外事件點陣 */
 .igrid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 5px; max-width: 520px; }
@@ -144,3 +144,103 @@ ul.limits { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: 
   .chapter { padding: 18px 16px; }
   .hero-card { padding: 16px 14px; }
 }
+
+/* 預留圖表與小圖 */
+.lead p { font-size: 17.5px; }
+.ph .phbox { border: 1.5px dashed var(--ghost); border-radius: 8px; min-height: 220px; display: grid; place-items: center; color: var(--ink-3); font-family: var(--mono); font-size: 13px; background: var(--surface); }
+.igrid.learn { grid-template-columns: repeat(13, 1fr); max-width: 420px; }
+.igrid i.k-tribe { background: var(--ink); border: 0; }
+.igrid i.k-family { background: var(--b); border: 0; }
+.bars { display: grid; gap: 6px; max-width: 520px; }
+.bar-row { display: grid; grid-template-columns: 72px 1fr 34px; gap: 8px; align-items: center; font-size: 14px; }
+.bar-row .t { height: 18px; background: var(--surface-2); border-radius: 4px; position: relative; }
+.bar-row .t span { position: absolute; left: 0; top: 0; bottom: 0; background: var(--a); border-radius: 4px; }
+.bar-row .v { font-family: var(--mono); font-weight: 600; text-align: right; }
+.half { display: flex; gap: 8px; flex-wrap: wrap; }
+.half i { width: 30px; height: 30px; display: inline-block; background: var(--surface-2); outline: 1px dashed var(--ghost);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='5' r='3.4'/%3E%3Cpath d='M4 19v-6.5C4 9.5 6.5 8.5 10 8.5s6 1 6 4V19z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='5' r='3.4'/%3E%3Cpath d='M4 19v-6.5C4 9.5 6.5 8.5 10 8.5s6 1 6 4V19z'/%3E%3C/svg%3E") center / contain no-repeat; }
+.half i { outline: 0; background: #cfc8b8; }
+.half i.on { background: var(--a); }
+
+/* 捲動圖卡：比例沿用〈同一個起點〉的薪資捲動段落 */
+body { background-attachment: fixed; }
+.story { position: relative; }
+.step { min-height: 100svh; display: flex; align-items: flex-end; justify-content: center; padding: 0 16px 7svh; }
+.story > .step:first-child { min-height: 110svh; }
+.step .card {
+  max-width: 400px; width: 100%; background: var(--card); border: 1.5px solid var(--ink);
+  border-radius: 10px; padding: 16px 18px; box-shadow: 5px 5px 0 rgba(29,33,38,.13); font-size: 16px; line-height: 1.75;
+  opacity: 0; transform: translateY(24px); transition: opacity .5s ease, transform .5s ease;
+}
+.step .card.in { opacity: 1; transform: none; }
+.step.title .card { background: var(--ink); color: var(--card); }
+.step.title h2 { font-size: 22px; }
+.figstep { padding: 18svh 16px; display: grid; justify-items: center; }
+.figstep .chapter { width: 100%; max-width: 700px; }
+.figstep.wide .chapter { max-width: 1080px; }
+@media (min-width: 900px) {
+  .step { justify-content: flex-start; align-items: center; padding: 0 0 0 max(32px, calc(50vw - 560px)); }
+  .step .card { max-width: 340px; }
+}
+@media (prefers-reduced-motion: reduce) { .step .card { opacity: 1; transform: none; transition: none; } }
+
+/* 地圖與新圖表 */
+.tile.ghost { background: transparent; border-style: dashed; color: var(--ink-3); }
+.mapwrap.two { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .mapwrap.two { grid-template-columns: 1fr; } }
+.twmap { width: 100%; height: auto; max-height: 560px; display: block; }
+.twmap .county { stroke: #fffdf8; stroke-width: .8; cursor: pointer; fill: #e4dfd3; transition: fill .3s; }
+.twmap .county.on { stroke: var(--ink); stroke-width: 1.8; }
+.twmap.muted .county, .muted .county { fill: #e4dfd3; cursor: default; }
+.twmap .comp { fill: none; stroke: var(--ghost); stroke-width: .8; stroke-dasharray: 3 3; }
+.adot { cursor: pointer; } .adot-t { font: 600 9px var(--mono); fill: #fff; pointer-events: none; }
+.mpanel { font-size: 15px; line-height: 1.7; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); min-height: 54px; }
+.mpanel small { color: var(--ink-3); font-size: 12.5px; }
+.legend.col { flex-direction: column; align-items: flex-start; margin-top: 10px; }
+.sw.sq { border-radius: 3px; } .sw.nod { background: repeating-linear-gradient(45deg, #ece8de 0 2px, #b3ac9c 2px 3px); }
+.sw.dash { background: transparent; border: 1.5px dashed var(--ink); }
+.train { display: grid; gap: 6px; }
+.tr-axis { display: grid; grid-template-columns: repeat(24, 1fr); font: 500 10.5px var(--mono); color: var(--ink-3); border-bottom: 1px solid var(--rule); }
+.tr-axis span.yr { color: var(--ink); font-weight: 600; }
+.tr-rows { position: relative; display: grid; gap: 6px; }
+.tr-row { position: relative; height: 36px; }
+.tr-bar { position: absolute; top: 4px; height: 10px; border-radius: 3px; background: var(--ink); }
+.tr-bar.plan { background: transparent; border: 1.5px dashed var(--ink); }
+.tr-lab { position: absolute; top: 16px; font-size: 13px; white-space: nowrap; color: var(--ink-2); }
+.leg { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.leg.access { stroke-width: 2; stroke-dasharray: 1 4; opacity: .9; }
+.leg.rail.dash { stroke-dasharray: 7 5; }
+.route { transition: opacity .3s; } .route.dim { opacity: .12; }
+.dest.solid { fill: var(--ink); } .dest.dash { fill: #fffdf8; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 2; }
+.dlab { font: 600 11px var(--body); fill: var(--ink); paint-order: stroke; stroke: #fffdf8; stroke-width: 3px; }
+.idot { fill: var(--b); stroke: #fffdf8; stroke-width: 1.5; }
+.legend .ln { width: 22px; height: 0; border-top: 3px solid var(--ink); display: inline-block; }
+.legend .ln.dash { border-top-style: dashed; } .legend .ln.dot { border-top-style: dotted; }
+#rpanel { display: grid; gap: 8px; }
+.rhead { font-weight: 700; font-size: 14.5px; display: flex; gap: 6px; align-items: center; }
+.rrow { border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; background: var(--surface); display: grid; gap: 4px; font-size: 13.5px; }
+.rrow .seg { display: grid; grid-template-columns: 74px 1fr; column-gap: 6px; }
+.rrow .seg em { font-style: normal; font-family: var(--mono); font-weight: 600; }
+.rrow .seg small { grid-column: 2; color: var(--ink-3); font-size: 12px; }
+details.rt summary { cursor: pointer; font-size: 14px; color: var(--a-dark); }
+.tw { overflow-x: auto; }
+#rtable { border-collapse: collapse; font-size: 13px; width: 100%; margin-top: 8px; }
+#rtable th, #rtable td { border-bottom: 1px solid var(--rule); padding: 6px 8px; text-align: left; white-space: nowrap; }
+.phnote { font-size: 12.5px; color: var(--hl); border: 1px dashed var(--hl); border-radius: 6px; padding: 6px 8px; margin-top: 6px; }
+.seas .sg { display: grid; grid-template-columns: 82px repeat(12, 1fr); gap: 2px; }
+.seas button { font: inherit; border: 0; background: none; cursor: pointer; padding: 0; color: var(--ink-2); }
+.seas .mh { font: 500 10.5px var(--mono); }
+.seas .tn { font-size: 12.5px; text-align: left; }
+.seas .tn.dim { opacity: .3; }
+.seas i { height: 16px; border-radius: 2px; background: var(--surface-2); }
+.seas i.on { background: var(--b); }
+.seas i.hl { outline: 2px solid var(--ink); }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .cases { grid-template-columns: 1fr; } }
+.cases > div { display: grid; gap: 8px; align-content: start; }
+.cases p { font-size: 14.5px; line-height: 1.65; border-left: 3px solid var(--ink); padding-left: 10px; }
+.cases p b { display: block; }
+.cases p small { display: block; color: var(--ink-3); font-size: 12px; }
+.ctag { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; border: 0 !important; padding: 0 !important; }
+.ctag.plan + p, .cases > div:last-child p:not(.ctag) { border-left-style: dashed; }

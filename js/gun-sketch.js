@@ -106,9 +106,9 @@
     return new p5((p) => {
       let s = 1, img = null, hover = null, par = [0, 0], parT = [0, 0], ex = 0;
 
-      p.preload = () => { img = p.loadImage(G.img); };
-      p.setup = () => {
+            p.setup = () => {
         const c = p.createCanvas(10, 10); c.parent(hostId);
+        p.loadImage(G.img, im => { img = im; }, () => { img = null; });   // 照片載不到時素描照常顯示
         c.elt.setAttribute('role', 'img');
         c.elt.setAttribute('aria-label', id === 'A' ? '甲式自製獵槍立體素描，可點選槍管、槍身、扳機護圈、槍托' : '乙式自製獵槍立體素描，可點選槍管、槍身、扳機護圈、槍托');
         fit();
