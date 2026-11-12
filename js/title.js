@@ -32,6 +32,7 @@
   const sketch = (p) => {
     let W, H, L = {};           // L: 版面計算結果
     let furG;                   // 雲紋圖層
+    let rightImg = null;        // 設計稿圖片：山裡的現實
     let t0 = 0;                 // 進場動畫起點
     let hover = 0;              // 滑鼠在右半時 → 尾巴擺動加快
 
@@ -48,30 +49,30 @@
       if (furG) { furG.remove(); furG = null; }
       const stacked = W < 640;
       const wL = measure(CONFIG.serif, 700, CONFIG.left);
-      const wR = measure(CONFIG.sans, 900, CONFIG.rightRest);
-      const mtn = 1.0, gap = 0.32;                            // 以字級為單位
+      // 右半「山裡的現實」用設計稿圖片：文字高度 94px、整張 497×181（含尾巴）
+      const TXT = 0.9, IMG_W = 497 / 94 * TXT, mtn = 0, wR = IMG_W, gap = 0.32;
       const pad = W * 0.04;
       L = { stacked, pad };
       if (!stacked) {
-        const S = (W - pad * 2) / (wL + gap + mtn + 0.05 + wR * 0.98 + 0.25);
+        const S = (W - pad * 2) / (wL + gap + wR);
         L.S = S; L.SR = S * 0.98;
         L.y1 = S * 1.1;
         L.xL = pad; L.wL = wL * S;
         L.xM = pad + L.wL + gap * S; L.mW = mtn * S;
-        L.xR = L.xM + L.mW + 0.05 * S; L.wR = wR * L.SR;
+        L.xR = L.xM; L.wR = wR * S;
         L.yLine = L.y1 + S * 0.32;
         L.subS = Math.min(S * 0.6, (L.xR + L.wR - pad) / measure(CONFIG.sans, 500, CONFIG.subtitle));
         L.ySub = L.yLine + L.subS * 1.25;
         H = L.ySub + L.subS * 0.55;
       } else {
         const S1 = (W - pad * 2) / wL;
-        const S2 = (W - pad * 2) / (mtn + 0.05 + wR * 0.98 + 0.3);
+        const S2 = (W - pad * 2) / wR;
         L.S = Math.min(S1, S2); L.SR = L.S * 0.98;
         L.xL = pad; L.wL = wL * L.S; L.y1 = L.S * 1.05;
         L.xM = pad; L.mW = mtn * L.S;
-        L.xR = pad + L.mW + 0.05 * L.S; L.wR = wR * L.SR;
+        L.xR = pad; L.wR = wR * L.S;
         L.y2 = L.y1 + L.S * 1.25;
-        L.yLine = L.y2 + L.S * 0.3;
+        L.yLine = L.y2 + L.S * 0.9;
         L.subS = (W - pad * 2) / measure(CONFIG.sans, 500, CONFIG.subtitle);
         L.ySub = L.yLine + L.subS * 1.4;
         H = L.ySub + L.subS * 0.6;
@@ -275,6 +276,15 @@
       p.point(tip[0], tip[1]);
     }
 
+    function drawRightImage(e) {
+      if (!rightImg) return;
+      const a = ease(e); if (a <= 0) return;
+      const S = L.S, h = S * 0.9 / 94 * 181, w = L.wR;
+      const x = L.xR, y = L.yR - S * 0.88 - S * 0.9 / 94 * 5 + (1 - a) * S * 0.15;
+      const ctx = p.drawingContext; ctx.save(); ctx.globalAlpha = a; ctx.drawImage(rightImg, x, y, w, h); ctx.restore();
+      L.rightEnd = x + w * (430 / 497);
+    }
+
     function drawParallelLine(e) {
       // 左邊是筆直的公文線，往右漸漸長成山稜線：同一條時間線，兩種現實
       const x0 = L.pad, x1 = L.stacked ? W - L.pad : (L.rightEnd || W - L.pad), y = L.yLine;
@@ -311,7 +321,8 @@
         document.fonts.load(`900 40px ${CONFIG.sans}`, CONFIG.rightRest),
         document.fonts.load(`500 40px ${CONFIG.sans}`, CONFIG.subtitle),
       ]).catch(() => {}) : Promise.resolve();
-      ready.then(() => { layout(); t0 = p.millis(); p.loop(); });
+      const imgReady = new Promise(res => { const im = new Image(); im.onload = () => { rightImg = im; res(); }; im.onerror = () => res(); im.src = 'assets/title_right.png'; });
+      Promise.all([ready, imgReady]).then(() => { layout(); t0 = p.millis(); p.loop(); });
     };
 
     p.draw = function () {
@@ -322,10 +333,7 @@
       p.background(CONFIG.paper);
       drawParallelLine(e);
       drawLeft(e);
-      drawMountain((e - 0.35) * 2.2, t);
-      drawRight((e - 0.45) * 1.6);
-      drawPaw(e);
-      drawTail(e, t);
+      drawRightImage((e - 0.4) * 1.8);
       drawSubtitle(e);
     };
 

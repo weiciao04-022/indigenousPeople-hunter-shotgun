@@ -108,7 +108,7 @@
 
             p.setup = () => {
         const c = p.createCanvas(10, 10); c.parent(hostId);
-        p.loadImage(G.img, im => { img = im; }, () => { img = null; });   // 照片載不到時素描照常顯示
+        { const im = new Image(); im.onload = () => { img = im; }; im.src = G.img; }   // 照片載不到時素描照常顯示
         c.elt.setAttribute('role', 'img');
         c.elt.setAttribute('aria-label', id === 'A' ? '甲式自製獵槍立體素描，可點選槍管、槍身、扳機護圈、槍托' : '乙式自製獵槍立體素描，可點選槍管、槍身、扳機護圈、槍托');
         fit();
@@ -240,7 +240,7 @@
         ctx.strokeStyle = 'rgba(120,105,75,0.10)'; ctx.lineWidth = 1 / s;
         for (let x = 0; x < G.w; x += 28) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, G.h); ctx.stroke(); }
         for (let y = 0; y < G.h; y += 28) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(G.w, y); ctx.stroke(); }
-        if (state.photo > 0 && img) { ctx.globalAlpha = state.photo * 0.9; ctx.drawImage(img.canvas || img.elt, 0, 0, G.w, G.h); ctx.globalAlpha = state.photo > 0.5 ? 0.55 : 1; }
+        if (state.photo > 0 && img) { ctx.globalAlpha = state.photo * 0.9; ctx.drawImage(img, 0, 0, G.w, G.h); ctx.globalAlpha = state.photo > 0.5 ? 0.55 : 1; }
 
         // 依深度由後往前畫
         [...G.parts].sort((a, b) => a.depth - b.depth).forEach(part => drawPart(part, ctx));

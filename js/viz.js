@@ -21,6 +21,9 @@
   const REG = { '臺北市': 1, '新北市': 47, '桃園市': 196, '臺中市': 65, '臺南市': 1, '高雄市': 322, '基隆市': 4, '新竹市': 1, '新竹縣': 450, '苗栗縣': 105, '彰化縣': 1, '南投縣': 995, '嘉義縣': 124, '屏東縣': 548, '宜蘭縣': 79, '花蓮縣': 1278, '臺東縣': 869, '連江縣': 1 };
   const ACC = { '花蓮縣': 3, '桃園市': 1, '苗栗縣': 5, '臺東縣': 2, '南投縣': 5, '新北市': 2, '屏東縣': 1, '新竹縣': 1, '臺中市': 1, '高雄市': 1, '宜蘭縣': 1 };
   const ACC_UNKNOWN = 9;
+  // 表 5-1-1 逐案：[日期, 縣市, 來源事由, 槍枝種類, 來源地點欄]
+  const CASES = [["2017/02/04", "花蓮縣", "把玩獵槍時，不慎擊發，誤射少年", "準後膛槍", "花蓮縣○○鄉/區"], ["2017/01/26", "花蓮縣", "誤認友人頭燈為獵物，導致死亡", "準後膛槍", "花蓮縣○○鄉/區"], ["2017/01/23", "桃園市", "誤扣板機致傷", "準後膛槍", "桃園市○○鄉/區"], ["2016/12/03", "苗栗縣", "誤扣扳機，一死一傷", "準後膛槍", "苗栗縣○○鄉/區"], ["2016/11/17", "臺東縣", "槍枝走火致死", "準後膛槍", "臺東縣○○鄉/區"], ["2016/03/09", "南投縣", "開槍未擊中獵物，卻損害尼僧苑門窗玻璃", "不詳", "南投縣○○鄉/區"], ["2015/12/22", "新北市", "誤觸獵擊發，導致他人死亡", "準後膛槍", "新北市○○鄉/區"], ["2015/12/06", "新北市", "誤認他人為動物，誤殺", "準後膛槍", "新北市○○鄉/區"], ["2015/11/20", "苗栗縣", "請風姓少年拿取通槍條，不慎誤觸擊發，射傷他人左上臂", "準後膛槍", "苗栗縣○○鄉/區"], ["2015/10/24", "南投縣", "裝填火藥時，不慎擊發，射傷大腿", "準後膛槍", "南投縣○○鄉/區"], ["2015/09/30", "地點不明", "誤認頭燈為動物眼睛，誤射他人，造成死亡", "準後膛槍", "未載明"], ["2015/04/18", "地點不明", "槍枝不慎掉落，意外擊發，誤傷他人", "準後膛槍", "未載明"], ["2015/03/27", "地點不明", "誤以為槍枝未填裝彈藥，誤擊，射穿他人腦部", "準後膛槍", "自宅門口"], ["2015/02/26", "屏東縣", "右手遭藤蔓纏住，誤射他人，造成死亡", "準後膛槍", "屏東縣○○鄉/區"], ["2014/12/18", "地點不明", "誤觸板機致傷", "準後膛槍", "自宅旁"], ["2014/12/13", "地點不明", "獵捕山豬，誤擊他人，錯傷", "準後膛槍", "未載明"], ["2014/11/11", "地點不明", "誤將父親頭燈當成獵物，錯殺", "準後膛槍", "未載明"], ["2013/11/17", "南投縣", "摔倒，槍枝走火，打死自己", "不詳", "南投縣○○鄉/區"], ["2013/11/14", "地點不明", "製作自製獵槍，槍枝走火，自傷", "準後膛槍", "自家住宅"], ["2013/10/27", "地點不明", "不慎擊發，擊中他人", "準後膛槍", "未載明"], ["2013/09/18", "苗栗縣", "槍枝走火，自傷", "準後膛槍", "苗栗縣○○鄉/區"], ["2013/02/23", "地點不明", "裝填火藥，引發膛炸，擊傷手臂", "前膛槍", "自家果園"], ["2012/11/23", "臺東縣", "路面顛頗，誤擊中自己，造成死亡", "準後膛槍", "臺東縣○○鄉/區"], ["2012/11/6", "新竹縣", "誤認，打死鄰居", "準後膛槍", "新竹縣○○鄉/區"], ["2012/06/11", "苗栗縣", "不慎滑倒，槍枝意外擊發，誤傷他人", "準後膛槍", "苗栗縣○○鄉/區"], ["2012/01/02", "南投縣", "誤觸獵槍自傷", "不詳", "南投縣○○鄉/區"], ["2011/12/23", "南投縣", "遭挑釁而殺人", "準後膛槍", "南投縣○○鄉/區"], ["2011/10/28", "苗栗縣", "獵槍扳機鬆脫，造成膛炸，重傷", "前膛槍", "苗栗縣○○鄉/區"], ["2010/03/18", "花蓮縣", "槍枝走火，誤擊中自己，造成死亡", "不詳", "花蓮縣○○鄉/區"], ["2008/12/06", "臺中市", "擦獵槍時誤扣板機，自傷", "後膛槍", "台中縣○○鄉"], ["2007/09/05", "高雄市", "錯把上山採藥人當羊，錯殺", "不詳", "高雄市○○鄉/區"], ["2007/05/13", "宜蘭縣", "誤將隊友的頭當當成獵物，射傷", "不詳", "宜蘭縣○○鄉/區"]];
+  const caseList = list => '<ol class="clist">' + list.map(c => `<li><span class="cd">${c[0]}</span>${c[2]}<small>${c[3]}${c[1] === '地點不明' ? '｜來源地點：' + c[4] : ''}</small></li>`).join('') + '</ol>';
   const BINS = [[1, 9, '#d3e6dc'], [10, 99, '#9cc7b0'], [100, 499, '#5e9c7e'], [500, 999, '#2f6b4f'], [1000, 1e9, '#173d2c']];
   const binOf = v => BINS.find(b => v >= b[0] && v <= b[1]);
 
@@ -37,13 +40,14 @@
     function show(name) {
       sel = name;
       Object.values(paths).forEach(p => p.classList.toggle('on', p.dataset.name === name));
-      if (!name) { panel.innerHTML = mode === 'reg' ? '<b>點選縣市</b>' : `<b>點選縣市</b>　地點不明 ${ACC_UNKNOWN} 件未上圖`; return; }
+      if (!name) { panel.innerHTML = mode === 'reg' ? '<b>點選縣市</b>' : `<b>點選縣市看案例</b><br><button class="linkbtn" id="unk">地點不明的 ${ACC_UNKNOWN} 件</button>`; const u = document.getElementById('unk'); if (u) u.onclick = () => show('地點不明'); return; }
       if (mode === 'reg') {
         const v = REG[name];
         panel.innerHTML = v ? `<b>${name}</b>　${v.toLocaleString()} 枝<br><small>警政署列管之原住民自製獵槍｜截至 2017 年 9 月｜p.55</small>` : `<b>${name}</b>　來源未列出<br><small>截至 2017 年 9 月｜p.55</small>`;
       } else {
-        const v = ACC[name] || 0;
-        panel.innerHTML = `<b>${name}</b>　${v} 件<br><small>研究收錄的意外案例｜2007–2017｜表 5-1-1，p.107–109</small>`;
+        const list = CASES.filter(c => c[1] === name);
+        panel.innerHTML = `<b>${name}</b>　${list.length} 件<br><small>研究收錄的意外案例｜表 5-1-1，p.107–109</small>` + (list.length ? caseList(list) : '') + (name !== '地點不明' ? `<button class="linkbtn" id="unk">看地點不明的 ${ACC_UNKNOWN} 件</button>` : '');
+        const u = document.getElementById('unk'); if (u) u.onclick = () => show('地點不明');
       }
     }
     function render() {
@@ -199,4 +203,48 @@
   }
 
   countyMap(); training(); routes(); tribeMap(); seasons();
+})();
+
+/* ---------- 學習管道：點從左邊流向三個去處（研究表 8-3-1） ---------- */
+(function () {
+  const svg = document.getElementById('learnflow'); if (!svg) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const LANES = [['族人教', 12, '#1d2126'], ['家人教', 11, '#9a5a2c'], ['自己學', 3, '#b3ac9c']];
+  const SX = 70, SY = 140, LX = 360, R = 6.5, GAP = 17;
+  const laneY = [52, 140, 228];
+  // 底線與標籤
+  el('text', { x: SX, y: SY - 26, 'text-anchor': 'middle', class: 'fl-lab' }, svg).textContent = '26 位受訪獵人';
+  LANES.forEach(([lab, n], i) => {
+    el('path', { d: `M${SX + 14},${SY} C${SX + 160},${SY} ${LX - 150},${laneY[i]} ${LX - 14},${laneY[i]}`, class: 'fl-guide' }, svg);
+    const t = el('text', { x: LX + 12 * GAP + 14, y: laneY[i] + 5, class: 'fl-n' }, svg); t.textContent = n;
+    const l = el('text', { x: LX, y: laneY[i] - 16, class: 'fl-lab' }, svg); l.textContent = lab;
+  });
+  // 點：每一點是一位受訪者
+  const dots = [];
+  LANES.forEach(([, n, c], li) => { for (let k = 0; k < n; k++) dots.push({ li, k, c }); });
+  dots.sort(() => Math.random() - 0.5);
+  dots.forEach((d, i) => {
+    d.tx = LX + d.k * GAP; d.ty = laneY[d.li];
+    d.sy = SY + (Math.random() - 0.5) * 30; d.delay = i * 90 + Math.random() * 60;
+    d.e = el('circle', { r: R, fill: d.c, cx: SX, cy: d.sy }, svg);
+  });
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const bez = (a, b, c, d, t) => (1 - t) ** 3 * a + 3 * (1 - t) ** 2 * t * b + 3 * (1 - t) * t * t * c + t ** 3 * d;
+  let t0 = null, raf;
+  function frame(now) {
+    if (t0 === null) t0 = now;
+    let done = true;
+    dots.forEach(d => {
+      let t = (now - t0 - d.delay) / 1400; if (t < 1) done = false; t = ease(Math.max(0, Math.min(1, t)));
+      const x = bez(SX, SX + 170, d.tx - 170, d.tx, t), y = bez(d.sy, d.sy, d.ty, d.ty, t);
+      d.e.setAttribute('cx', x); d.e.setAttribute('cy', y);
+    });
+    if (!done) raf = requestAnimationFrame(frame);
+  }
+  function play() { cancelAnimationFrame(raf); t0 = null; if (reduce) { dots.forEach(d => { d.e.setAttribute('cx', d.tx); d.e.setAttribute('cy', d.ty); }); return; } raf = requestAnimationFrame(frame); }
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { play(); io.disconnect(); } }, { threshold: .5 });
+  io.observe(svg);
+  document.getElementById('learn-replay').addEventListener('click', play);
 })();
