@@ -23,7 +23,7 @@
     fur: '#c9a46c',
     spot: '#2a1d15',
     tail: '#9a968f',
-    paper: '#ffffff',
+    paper: '#fffdf8',
     introMs: 2600,
   };
 
