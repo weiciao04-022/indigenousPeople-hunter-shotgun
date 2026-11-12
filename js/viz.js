@@ -87,8 +87,8 @@
     const items = [
       { y: 2025, m: 6, d: 2, w: 0.3, label: '第一梯次｜桃園、新北｜參訓 50 人', st: 'done' },
       { y: 2025, m: 9, d: 22, w: 0.3, label: '第二梯次｜嘉義市｜正取 50、備取 20', st: 'done' },
-      { y: 2026, m: 7, d: 1, w: 6, label: '規劃 40 場（實際開辦數待查）', st: 'plan' },
-      { y: 2026, m: 8, d: 15, w: 0.3, label: '台東場：最快 8 月中', st: 'plan' },
+      { y: 2026, m: 7, d: 1, w: 6, label: '規劃 40 場，一場都沒辦', st: 'plan' },
+      { y: 2026, m: 8, d: 15, w: 0.3, label: '台東場原訂最快 8 月中，未辦', st: 'plan' },
     ];
     let html = '<div class="tr-axis">' + months.map(([y, m]) => `<span class="${m === 1 ? 'yr' : ''}">${m === 1 ? y : m}</span>`).join('') + '</div><div class="tr-rows">';
     items.forEach(it => {
